@@ -4,6 +4,16 @@
 #include <pthread.h>
 #include "clog/clog.h"
 
+static const char *log_level_str[] = {
+        "TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL",
+};
+
+static const char *level_colors[] = {
+        "\x1b[94m", "\x1b[36m", "\x1b[32m", "\x1b[33m", "\x1b[31m", "\x1b[35m"
+};
+
+static const char *color_reset = "\x1b[0m";
+
 static struct {
     bool quiet;
     enum clog_level level;
