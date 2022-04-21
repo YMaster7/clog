@@ -35,22 +35,32 @@ int main() {
 
     clog_set_level(CLOG_LEVEL_TRACE);
 
+    int res;
     pthread_t t1, t2, t3;
     log_trace("main: create thread1");
-    pthread_create(&t1, NULL, f1, NULL);
+    res = pthread_create(&t1, NULL, f1, NULL);
+    log_check(res == 0, "thread1 creation failed");
+
     log_trace("main: create thread2");
-    pthread_create(&t2, NULL, f2, NULL);
+    res = pthread_create(&t2, NULL, f2, NULL);
+    log_check(res == 0, "thread2 creation failed");
+
     log_trace("main: create thread3");
-    pthread_create(&t3, NULL, f3, NULL);
+    res = pthread_create(&t3, NULL, f3, NULL);
+    log_check(res == 0, "thread3 creation failed");
 
     log_info("main: sleep for 5 seconds");
     sleep(5);
 
-    pthread_join(t1, NULL);
-    pthread_join(t2, NULL);
-    pthread_join(t3, NULL);
+    res = pthread_join(t1, NULL);
+    log_check(res == 0, "thread1 join failed");
+
+    res = pthread_join(t2, NULL);
+    log_check(res == 0, "thread2 join failed");
+
+    res = pthread_join(t3, NULL);
+    log_check(res == 0, "thread3 join failed");
 
     log_trace("main end");
-
     return 0;
 }

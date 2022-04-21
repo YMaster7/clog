@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 enum clog_level {
     CLOG_LEVEL_TRACE,
@@ -17,6 +18,14 @@ enum clog_level {
 #define log_warn(...)  clog_log(CLOG_LEVEL_WARN, __VA_ARGS__)
 #define log_error(...) clog_log(CLOG_LEVEL_ERROR, __VA_ARGS__)
 #define log_fatal(...) clog_log(CLOG_LEVEL_FATAL, __VA_ARGS__)
+
+#define log_check(expr, ...)        \
+    do {                            \
+        if (!(expr)) {              \
+            log_fatal(__VA_ARGS__); \
+            exit(1);                \
+        }                           \
+    } while (0)
 
 void clog_log(enum clog_level level, const char *format, ...);
 
